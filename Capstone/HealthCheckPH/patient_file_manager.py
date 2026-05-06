@@ -29,8 +29,8 @@ QR Code       : {patient_data.get("qr_code")}
 Full Name     : {patient_data.get("full_name")}
 Age           : {patient_data.get("age")}
 Sex           : {patient_data.get("sex")}
-Contact / ID  : {patient_data.get("contact")}
-Branch        : {patient_data.get("branch")}
+Contact No.   : {patient_data.get("contact")}
+Student ID    : {patient_data.get("student_id")}
 ========================================
 
 """

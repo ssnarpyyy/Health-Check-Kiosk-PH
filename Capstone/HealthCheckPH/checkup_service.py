@@ -10,10 +10,10 @@ from validators import (
 from status_checker import evaluate_status
 from sensors.factory import get_sensor_service
 from sensors.real import SensorHardwareError
-from HealthCheckPH.patient_file_manager import save_patient_info_to_txt
+from patient_file_manager import save_patient_info_to_txt
 
 
-def save_patient_txt_backup(record_id, user_id, qr_code, full_name, age, sex, contact, branch):
+def save_patient_txt_backup(record_id, user_id, qr_code, full_name, age, sex, contact, student_id):
     """
     Saves patient information into a .txt file.
     This is only a backup record. MySQL is still the main database.
@@ -27,7 +27,7 @@ def save_patient_txt_backup(record_id, user_id, qr_code, full_name, age, sex, co
         "age": age,
         "sex": sex,
         "contact": contact,
-        "branch": branch
+        "student_id": student_id
     }
 
     return save_patient_info_to_txt(patient_data)
@@ -46,7 +46,7 @@ def create_patient_checkup(data):
     age = int(data.get("age"))
     sex = data.get("sex")
     contact = data.get("contact", "").strip()
-    branch = data.get("branch", "").strip()
+    student_id = data.get("student_id", "").strip()
 
     db = get_db()
 
@@ -64,7 +64,7 @@ def create_patient_checkup(data):
                 age,
                 sex,
                 contact,
-                branch
+                student_id
             ))
 
             user_id = cursor.lastrowid
@@ -99,7 +99,7 @@ def create_patient_checkup(data):
             age,
             sex,
             contact,
-            branch
+            student_id
         )
 
         return {

@@ -19,3 +19,7 @@ CALIBRATION = {
     "height_offset": -0.5,
     "weight_offset": 0.2
 }
+
+# Secret key for Flask session management
+# Change this to a strong random key in production
+SECRET_KEY = "your-secret-key-change-in-production"

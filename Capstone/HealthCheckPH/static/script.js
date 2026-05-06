@@ -16,7 +16,7 @@ function clearErrors() {
     "ageError",
     "sexError",
     "contactError",
-    "branchError"
+    "studentIdError"
   ];
 
   errorIds.forEach(id => {
@@ -46,8 +46,8 @@ function showBackendErrors(errors) {
     document.getElementById("contactError").textContent = errors.contact;
   }
 
-  if (errors.branch) {
-    document.getElementById("branchError").textContent = errors.branch;
+  if (errors.student_id) {
+    document.getElementById("studentIdError").textContent = errors.student_id;
   }
 
   const alertBox = document.getElementById("formAlert");
@@ -63,7 +63,7 @@ function submitPatient() {
     age: document.getElementById("age").value.trim(),
     sex: document.getElementById("sex").value,
     contact: document.getElementById("contact").value.trim(),
-    branch: document.getElementById("branch").value.trim()
+    student_id: document.getElementById("studentId").value.trim()
   };
 
   fetch("/api/patient/start", {
@@ -236,7 +236,7 @@ function showResults() {
         "Patient: " + patient.full_name;
 
       document.getElementById("resultPatientDetails").textContent =
-        patient.age + " years old • " + patient.sex + " • " + patient.branch;
+        patient.age + " years old • " + patient.sex;
 
       document.getElementById("resTemperature").textContent =
         vitals.temperature + " °C";
@@ -286,9 +286,17 @@ function restartSystem() {
   document.getElementById("age").value = "";
   document.getElementById("sex").value = "";
   document.getElementById("contact").value = "";
-  document.getElementById("branch").value = "";
+  document.getElementById("studentId").value = "";
 
   clearErrors();
   resetMeasurements();
   showScreen("landingScreen");
+}
+
+function printAndGoHome() {
+  window.print();
+  // Redirect to home after a short delay to allow print dialog to open
+  setTimeout(() => {
+    window.location.href = "/";
+  }, 1000);
 }

@@ -13,6 +13,7 @@
 
 
   <section class="screen active" id="landingScreen">
+    <a href="/admin/login" class="admin-login">Admin Login</a>
     <div class="hero">
       <div class="logo">⌁</div>
 
@@ -66,16 +67,18 @@
         </div>
       </div>
 
-      <div class="field">
-        <label>Contact No. / Student ID</label>
-        <input type="text" id="contact" placeholder="Enter contact number or ID">
-        <small class="error" id="contactError"></small>
-      </div>
+      <div class="two-col">
+        <div class="field">
+          <label>Contact No.</label>
+          <input type="text" id="contact" placeholder="Enter contact number">
+          <small class="error" id="contactError"></small>
+        </div>
 
-      <div class="field">
-        <label>Location / Branch *</label>
-        <input type="text" id="branch" placeholder="Enter location or branch">
-        <small class="error" id="branchError"></small>
+        <div class="field">
+          <label>Student ID</label>
+          <input type="text" id="studentId" placeholder="Enter student ID">
+          <small class="error" id="studentIdError"></small>
+        </div>
       </div>
 
       <div class="button-row">
@@ -245,7 +248,7 @@
 
       <div class="button-row">
         <button class="back-btn" onclick="restartSystem()">Finish</button>
-        <button class="main-btn wide" onclick="window.print()">Print Result</button>
+        <button class="main-btn wide" onclick="printAndGoHome()">Print Result</button>
       </div>
     </div>
   </section>

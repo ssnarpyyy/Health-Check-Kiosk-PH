@@ -29,7 +29,7 @@ def validate_patient(data):
     age = data.get("age", "").strip()
     sex = data.get("sex", "").strip()
     contact = data.get("contact", "").strip()
-    branch = data.get("branch", "").strip()
+    student_id = data.get("student_id", "").strip()
 
     if not full_name:
         errors["full_name"] = "Full name is required."
@@ -51,16 +51,17 @@ def validate_patient(data):
 
     if contact:
         if len(contact) < 5 or len(contact) > 30:
-            errors["contact"] = "Contact number or Student ID must be 5 to 30 characters."
+            errors["contact"] = "Contact number must be 5 to 30 characters."
         elif not re.match(r"^[A-Za-z0-9 -]+$", contact):
-            errors["contact"] = "Contact number or Student ID contains invalid characters."
+            errors["contact"] = "Contact number contains invalid characters."
 
-    if not branch:
-        errors["branch"] = "Location or branch is required."
-    elif len(branch) < 2:
-        errors["branch"] = "Location or branch is too short."
-    elif len(branch) > 100:
-        errors["branch"] = "Location or branch is too long."
+    if student_id:
+        if len(student_id) < 2:
+            errors["student_id"] = "Student ID is too short."
+        elif len(student_id) > 50:
+            errors["student_id"] = "Student ID is too long."
+        elif not re.match(r"^[A-Za-z0-9 -]+$", student_id):
+            errors["student_id"] = "Student ID contains invalid characters."
 
     return errors
 
