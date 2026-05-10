@@ -1,0 +1,112 @@
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-06 20:16:51
+Record ID     : 8
+User ID       : 8
+QR Code       : HC-8-833dc0c0
+
+Full Name     : bogart
+Age           : 99
+Sex           : Male
+Contact / ID  : 09124212424
+Branch        : bsu lipa
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-06 23:26:23
+Record ID     : 9
+User ID       : 9
+QR Code       : HC-9-e74e18c8
+
+Full Name     : frances laprades
+Age           : 20
+Sex           : Male
+Contact / ID  : 23-34700
+Branch        : bsu
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-07 00:48:18
+Record ID     : 10
+User ID       : 10
+QR Code       : HC-10-e1f9f62f
+
+Full Name     : John Doe
+Age           : 25
+Sex           : Male
+Contact No.   : 09123456789
+Student ID    : STU12345
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-07 00:49:38
+Record ID     : 11
+User ID       : 11
+QR Code       : HC-11-53fff58d
+
+Full Name     : John Doe
+Age           : 25
+Sex           : Male
+Contact No.   : 09917268521
+Student ID    : 23-34700
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-07 00:58:58
+Record ID     : 12
+User ID       : 12
+QR Code       : HC-12-b744ffd1
+
+Full Name     : mark bunsay
+Age           : 19
+Sex           : Male
+Contact No.   : 09123456789
+Student ID    : 23-34158
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-07 01:01:07
+Record ID     : 13
+User ID       : 13
+QR Code       : HC-13-26397cee
+
+Full Name     : Test Patient
+Age           : 30
+Sex           : Male
+Contact No.   : 09123456789
+Student ID    : TEST001
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-07 01:01:43
+Record ID     : 14
+User ID       : 14
+QR Code       : HC-14-8f746a70
+
+Full Name     : Test Patient
+Age           : 30
+Sex           : Male
+Contact No.   : 09123456789
+Student ID    : TEST001
+========================================
+
