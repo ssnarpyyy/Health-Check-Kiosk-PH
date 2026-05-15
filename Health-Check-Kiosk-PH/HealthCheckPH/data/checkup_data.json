@@ -1,0 +1,222 @@
+{
+  "1": {
+    "record_id": 1,
+    "user_id": 1,
+    "full_name": "laurenze villanueva",
+    "age": 21,
+    "sex": "Male",
+    "contact": "09949677824",
+    "student_id": "23-39230",
+    "qr_code": "HC-1-1aeecffd",
+    "status": "In Progress",
+    "measurements": {
+      "body_temperature": null,
+      "heart_rate": null,
+      "spo2": null,
+      "blood_pressure": null,
+      "height": null,
+      "weight": null,
+      "bmi": null
+    }
+  },
+  "2": {
+    "record_id": 2,
+    "user_id": 2,
+    "full_name": "laurenze villanueva",
+    "age": 21,
+    "sex": "Male",
+    "contact": "09949677824",
+    "student_id": "23-39230",
+    "qr_code": "HC-2-5cc0cf7f",
+    "status": "In Progress",
+    "measurements": {
+      "body_temperature": 36.6,
+      "heart_rate": null,
+      "spo2": null,
+      "blood_pressure": null,
+      "height": null,
+      "weight": null,
+      "bmi": null
+    }
+  },
+  "3": {
+    "record_id": 3,
+    "user_id": 3,
+    "full_name": "laurenze villanueva",
+    "age": 21,
+    "sex": "Male",
+    "contact": "09949677824",
+    "student_id": "23-39230",
+    "qr_code": "HC-3-47832a98",
+    "status": "In Progress",
+    "measurements": {
+      "body_temperature": 36.9,
+      "heart_rate": null,
+      "spo2": null,
+      "blood_pressure": null,
+      "height": null,
+      "weight": null,
+      "bmi": null
+    }
+  },
+  "4": {
+    "record_id": 4,
+    "user_id": 4,
+    "full_name": "laurenze villanueva",
+    "age": 21,
+    "sex": "Male",
+    "contact": "09949677824",
+    "student_id": "23-39230",
+    "qr_code": "HC-4-c182fc2d",
+    "status": "In Progress",
+    "measurements": {
+      "body_temperature": 37.2,
+      "heart_rate": 83,
+      "spo2": 97,
+      "blood_pressure": "114/74",
+      "height": 168.0,
+      "weight": 70.4,
+      "bmi": 24.9
+    }
+  },
+  "5": {
+    "record_id": 5,
+    "user_id": 5,
+    "full_name": "laurenze villanueva",
+    "age": 21,
+    "sex": "Male",
+    "contact": "09949677824",
+    "student_id": "23-39230",
+    "qr_code": "HC-5-339d5dc7",
+    "status": "In Progress",
+    "measurements": {
+      "body_temperature": 36.8,
+      "heart_rate": 77,
+      "spo2": 96,
+      "blood_pressure": "128/79",
+      "height": 176.2,
+      "weight": 49.1,
+      "bmi": 15.8
+    }
+  },
+  "6": {
+    "record_id": 6,
+    "user_id": 6,
+    "full_name": "laurenze villanueva",
+    "age": 21,
+    "sex": "Male",
+    "contact": "09949677824",
+    "student_id": "23-39230",
+    "qr_code": "HC-6-99f00811",
+    "status": "In Progress",
+    "measurements": {
+      "body_temperature": 37.0,
+      "heart_rate": 85,
+      "spo2": 98,
+      "blood_pressure": "122/72",
+      "height": 156.7,
+      "weight": 76.2,
+      "bmi": 31.0
+    }
+  },
+  "7": {
+    "record_id": 7,
+    "user_id": 7,
+    "full_name": "laurenze villanueva",
+    "age": 21,
+    "sex": "Male",
+    "contact": "09949677824",
+    "student_id": "23-39230",
+    "qr_code": "HC-7-3b10d6fa",
+    "status": "In Progress",
+    "measurements": {
+      "body_temperature": 37.0,
+      "heart_rate": 72,
+      "spo2": 99,
+      "blood_pressure": "112/78",
+      "height": 176.9,
+      "weight": 48.5,
+      "bmi": 15.5
+    }
+  },
+  "8": {
+    "record_id": 8,
+    "user_id": 8,
+    "full_name": "laurenze villanueva",
+    "age": 21,
+    "sex": "Male",
+    "contact": "09949677824",
+    "student_id": "23-39230",
+    "qr_code": "HC-8-fb6bd8bd",
+    "status": "In Progress",
+    "measurements": {
+      "body_temperature": 37.0,
+      "heart_rate": 74,
+      "spo2": 99,
+      "blood_pressure": "117/83",
+      "height": 157.8,
+      "weight": 66.5,
+      "bmi": 26.7
+    }
+  },
+  "9": {
+    "record_id": 9,
+    "user_id": 9,
+    "full_name": "laurenze villanueva",
+    "age": 21,
+    "sex": "Male",
+    "contact": "09949677824",
+    "student_id": "23-39230",
+    "qr_code": "HC-9-d35a2ab3",
+    "status": "In Progress",
+    "measurements": {
+      "body_temperature": 36.6,
+      "heart_rate": 74,
+      "spo2": 97,
+      "blood_pressure": "122/79",
+      "height": 169.4,
+      "weight": 68.8,
+      "bmi": 24.0
+    }
+  },
+  "10": {
+    "record_id": 10,
+    "user_id": 10,
+    "full_name": "laurenze villanueva",
+    "age": 21,
+    "sex": "Male",
+    "contact": "09949677824",
+    "student_id": "23-39230",
+    "qr_code": "HC-10-22569830",
+    "status": "In Progress",
+    "measurements": {
+      "body_temperature": 37.1,
+      "heart_rate": 86,
+      "spo2": 96,
+      "blood_pressure": "126/71",
+      "height": 167.0,
+      "weight": 66.3,
+      "bmi": 23.8
+    }
+  },
+  "11": {
+    "record_id": 11,
+    "user_id": 11,
+    "full_name": "kenneth barte",
+    "age": 100,
+    "sex": "Male",
+    "contact": "09912399213",
+    "student_id": "23-39234",
+    "qr_code": "HC-11-0358ffc0",
+    "status": "In Progress",
+    "measurements": {
+      "body_temperature": 36.9,
+      "heart_rate": 96,
+      "spo2": 97,
+      "blood_pressure": "127/81",
+      "height": 166.0,
+      "weight": 50.9,
+      "bmi": 18.5
+    }
+  }
+}

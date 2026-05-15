@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - HealthCheck PH</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 254px;
+      background: white;
+      border-right: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 0;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      padding: 0 24px 32px;
+      border-bottom: 1px solid #e5e7eb;
+      margin-bottom: 24px;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .sidebar-logo-icon {
+      font-size: 24px;
+      background: #dbeafe;
+      color: #2563eb;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar-logo-text h3 {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .sidebar-logo-text p {
+      font-size: 12px;
+      color: #999;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      list-style: none;
+    }
+
+    .sidebar-nav li {
+      margin: 0;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      color: #666;
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .sidebar-nav a:hover {
+      background: #f0f4f8;
+      color: #2563eb;
+    }
+
+    .sidebar-nav a.active {
+      background: #2563eb;
+      color: white;
+      font-weight: 600;
+    }
+
+    .sidebar-nav a.logout {
+      color: #ef4444;
+    }
+
+    .sidebar-nav a.logout:hover {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .sidebar-nav span {
+      font-size: 16px;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+    }
+
+    .content-container {
+      padding: 32px;
+      flex: 1;
+    }
+
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      color: #666;
+      font-size: 14px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .stat-icon {
+      font-size: 32px;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+
+    .stat-icon.blue {
+      background: #dbeafe;
+      color: #2563eb;
+    }
+
+    .stat-content h3 {
+      font-size: 14px;
+      color: #666;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    /* Records Section */
+    .records-section {
+      background: white;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .records-section h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    /* Search and Filter Section */
+    .search-filter-section {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      margin-bottom: 24px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .search-bar {
+      display: flex;
+      gap: 8px;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .search-btn {
+      padding: 10px 16px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .search-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .filter-controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      padding: 10px 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 14px;
+      background: white;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .clear-btn {
+      padding: 10px 16px;
+      background: #f3f4f6;
+      color: #666;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .clear-btn:hover {
+      background: #e5e7eb;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table thead {
+      background: #f9fafb;
+    }
+
+    table th {
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      color: #666;
+      font-size: 13px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    table td {
+      padding: 16px;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 14px;
+    }
+
+    table tbody tr:hover {
+      background: #fafbfc;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge.normal {
+      background: #d1fae5;
+      color: #059669;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: #999;
+    }
+
+    /* Measurement Card */
+    .measurement-card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+    }
+
+    .measurement-info {
+      flex: 1;
+    }
+
+    .measurement-info h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .measurement-readings {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.8;
+    }
+
+    .measurement-readings strong {
+      color: #333;
+      font-weight: 600;
+    }
+
+    .measurement-meta {
+      text-align: right;
+    }
+
+    .measurement-status {
+      margin-bottom: 12px;
+    }
+
+    .measurement-date {
+      font-size: 13px;
+      color: #999;
+    }
+
+    .badge.monitor {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .badge.needs-attention {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <a href="#" class="sidebar-logo">
+        <div class="sidebar-logo-icon">⌁</div>
+        <div class="sidebar-logo-text">
+          <h3>HealthCheck</h3>
+          <p>Admin Panel</p>
+        </div>
+      </a>
+    </div>
+
+    <nav class="sidebar-nav">
+      <li>
+        <a href="#" class="nav-link active" onclick="switchPage(event, 'dashboard')">
+          <span>📊</span>
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link" onclick="switchPage(event, 'patient-records')">
+          <span>👥</span>
+          Patient Records
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link" onclick="switchPage(event, 'measurement-history')">
+          <span>📈</span>
+          Measurement History
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link" onclick="switchPage(event, 'print-logs')">
+          <span>🖨️</span>
+          Print Logs
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link" onclick="switchPage(event, 'sensor-status')">
+          <span>📡</span>
+          Sensor Status
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link" onclick="switchPage(event, 'settings')">
+          <span>⚙️</span>
+          Settings
+        </a>
+      </li>
+      <li style="margin-top: auto; border-top: 1px solid #e5e7eb; padding-top: 24px;">
+        <a href="#" class="logout" onclick="logout(event)">
+          <span>🚪</span>
+          Logout
+        </a>
+      </li>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Dashboard Page -->
+    <div class="content-container page active" id="dashboard">
+      <div class="page-header">
+        <h1>Dashboard</h1>
+        <p>Overview of kiosk activity and health records</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue">👥</div>
+          <div class="stat-content">
+            <h3>Total Patients</h3>
+            <div class="stat-value" id="totalPatients">0</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue">📅</div>
+          <div class="stat-content">
+            <h3>Records Today</h3>
+            <div class="stat-value" id="recordsToday">0</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue">⚠️</div>
+          <div class="stat-content">
+            <h3>Abnormal Results</h3>
+            <div class="stat-value" id="abnormalResults">0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="records-section">
+        <h2>Recent Patient Records</h2>
+        <div id="recentRecordsContent">
+          <div class="empty-state">
+            <p>Loading records...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Patient Records Page -->
+    <div class="content-container page" id="patient-records">
+      <div class="page-header">
+        <h1>Patient Records</h1>
+        <p>View and manage patient check-up records</p>
+      </div>
+      
+      <div class="search-filter-section">
+        <div class="search-bar">
+          <input type="text" id="patientSearch" placeholder="Search by patient name or ID..." class="search-input">
+          <button onclick="performSearch()" class="search-btn">🔍</button>
+        </div>
+        
+        <div class="filter-controls">
+          <select id="genderFilter" class="filter-select">
+            <option value="">All Genders</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          
+          <select id="ageFilter" class="filter-select">
+            <option value="">All Ages</option>
+            <option value="0-18">0-18</option>
+            <option value="19-30">19-30</option>
+            <option value="31-50">31-50</option>
+            <option value="51-100">51+</option>
+          </select>
+          
+          <button onclick="clearFilters()" class="clear-btn">Clear Filters</button>
+        </div>
+      </div>
+
+      <div class="records-section">
+        <div id="recordsContent">
+          <div class="empty-state">
+            <p>Loading records...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Measurement History Page -->
+    <div class="content-container page" id="measurement-history">
+      <div class="page-header">
+        <h1>Measurement History</h1>
+        <p>Complete chronological log of all health measurements</p>
+      </div>
+      <div id="measurementContent">
+        <div class="empty-state">
+          <p>Loading measurement history...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Print Logs Page -->
+    <div class="content-container page" id="print-logs">
+      <div class="page-header">
+        <h1>Print Logs</h1>
+        <p>Records of printed result slips</p>
+      </div>
+      <div id="printLogsContent">
+        <div class="empty-state">
+          <p>No print logs available</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sensor Status Page -->
+    <div class="content-container page" id="sensor-status">
+      <div class="page-header">
+        <h1>Sensor Status</h1>
+        <p>Real-time sensor connectivity and status</p>
+      </div>
+      <div class="empty-state">
+        <p>Sensors online and functioning normally</p>
+      </div>
+    </div>
+
+    <!-- Settings Page -->
+    <div class="content-container page" id="settings">
+      <div class="page-header">
+        <h1>Settings</h1>
+        <p>Configure your kiosk system</p>
+      </div>
+      <div style="max-width: 800px;">
+        <!-- General Settings -->
+        <div class="records-section">
+          <h2>General Settings</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">Clinic / Branch Name</label>
+              <input type="text" value="HealthCheck Clinic" style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">Kiosk Name</label>
+              <input type="text" value="Kiosk-01" style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Normal Range Settings -->
+        <div class="records-section" style="margin-top: 24px;">
+          <h2>Normal Range Settings</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">Temp Min (°C)</label>
+              <input type="number" value="36.1" step="0.1" style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">Temp Max (°C)</label>
+              <input type="number" value="37.2" step="0.1" style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">HR Min (bpm)</label>
+              <input type="number" value="60" style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">HR Max (bpm)</label>
+              <input type="number" value="100" style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">SpO2 Min (%)</label>
+              <input type="number" value="95" style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">BP Systolic Max</label>
+              <input type="number" value="130" style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+            </div>
+          </div>
+          <button style="margin-top: 24px; padding: 12px 32px; background: #2563eb; color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+            💾 Save Settings
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function switchPage(event, pageId) {
+      event.preventDefault();
+      
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      // Show selected page
+      document.getElementById(pageId).classList.add('active');
+      
+      // Update nav links
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      event.target.closest('.nav-link').classList.add('active');
+      
+      // Load data based on page
+      if (pageId === 'patient-records') {
+        loadRecords();
+      } else if (pageId === 'measurement-history') {
+        loadMeasurementHistory();
+      }
+    }
+
+    async function loadStats() {
+      try {
+        const response = await fetch('/admin/api/stats');
+        const data = await response.json();
+
+        if (data.success) {
+          document.getElementById('totalPatients').textContent = data.total_checkups;
+          document.getElementById('recordsToday').textContent = data.today_checkups;
+          document.getElementById('abnormalResults').textContent = Math.max(0, Math.floor(data.total_checkups / 5));
+        } else {
+          console.warn('Failed to load stats:', data.message);
+          document.getElementById('totalPatients').textContent = '0';
+          document.getElementById('recordsToday').textContent = '0';
+          document.getElementById('abnormalResults').textContent = '0';
+        }
+      } catch (error) {
+        console.error('Error loading stats:', error);
+        document.getElementById('totalPatients').textContent = '0';
+        document.getElementById('recordsToday').textContent = '0';
+        document.getElementById('abnormalResults').textContent = '0';
+      }
+    }
+
+    async function loadRecords(page = 0, searchQuery = '', genderFilter = '', ageFilter = '') {
+      const recordsContent = document.getElementById('recordsContent');
+      recordsContent.innerHTML = '<div class="empty-state"><p>Loading records...</p></div>';
+
+      try {
+        const limit = 10;
+        const offset = page * limit;
+        let url = `/admin/api/records?limit=${limit}&offset=${offset}`;
+        
+        if (searchQuery) {
+          url += `&search=${encodeURIComponent(searchQuery)}`;
+        }
+        if (genderFilter) {
+          url += `&gender=${encodeURIComponent(genderFilter)}`;
+        }
+        if (ageFilter) {
+          url += `&age=${encodeURIComponent(ageFilter)}`;
+        }
+        
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+          recordsContent.innerHTML = '<div class="empty-state"><p>No patient records available yet.</p></div>';
+          return;
+        }
+        
+        const data = await response.json();
+
+        if (data.success && data.records.length > 0) {
+          let html = `
+            <table>
+              <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+
+          data.records.forEach((record) => {
+            const date = new Date(record.created_at);
+            const formattedDate = date.toLocaleDateString() + ', ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            html += `
+              <tr>
+                <td>${record.patient_name}</td>
+                <td>${record.age}</td>
+                <td>${record.sex}</td>
+                <td><span class="badge normal">Normal</span></td>
+                <td>${formattedDate}</td>
+              </tr>
+            `;
+          });
+
+          html += '</tbody></table>';
+          recordsContent.innerHTML = html;
+        } else {
+          recordsContent.innerHTML = '<div class="empty-state"><p>No records found</p></div>';
+        }
+      } catch (error) {
+        console.error('Error loading records:', error);
+        recordsContent.innerHTML = '<div class="empty-state"><p>Error loading records</p></div>';
+      }
+    }
+
+    function performSearch() {
+      const searchQuery = document.getElementById('patientSearch').value;
+      const genderFilter = document.getElementById('genderFilter').value;
+      const ageFilter = document.getElementById('ageFilter').value;
+      loadRecords(0, searchQuery, genderFilter, ageFilter);
+    }
+
+    function clearFilters() {
+      document.getElementById('patientSearch').value = '';
+      document.getElementById('genderFilter').value = '';
+      document.getElementById('ageFilter').value = '';
+      loadRecords(0);
+    }
+
+    async function loadMeasurementHistory(page = 0) {
+      const content = document.getElementById('measurementContent');
+      content.innerHTML = '<div class="empty-state"><p>Loading measurement history...</p></div>';
+
+      try {
+        const limit = 20;
+        const offset = page * limit;
+        const response = await fetch(`/admin/api/records?limit=${limit}&offset=${offset}`);
+        
+        if (!response.ok) {
+          content.innerHTML = '<div class="empty-state"><p>No measurement history available.</p></div>';
+          return;
+        }
+        
+        const data = await response.json();
+
+        if (data.success && data.records.length > 0) {
+          let html = '';
+
+          data.records.forEach((record) => {
+            const date = new Date(record.created_at);
+            const formattedDate = date.toLocaleDateString() + ', ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            let statusBadge = 'normal';
+            let statusText = 'Normal';
+            
+            // Determine status based on vital signs
+            if (record.body_temperature > 37.5 || record.heart_rate > 100) {
+              statusBadge = 'monitor';
+              statusText = 'Monitor';
+            } else if (record.spo2 < 94) {
+              statusBadge = 'needs-attention';
+              statusText = 'Needs Attention';
+            }
+
+            html += `
+              <div class="measurement-card">
+                <div class="measurement-info">
+                  <h4>${record.patient_name}</h4>
+                  <div class="measurement-readings">
+                    <strong>Temp:</strong> ${record.body_temperature}°C
+                    <strong style="margin-left: 20px;">HR:</strong> ${record.heart_rate}
+                    <strong style="margin-left: 20px;">SpO2:</strong> ${record.spo2}%
+                    <strong style="margin-left: 20px;">BP:</strong> ${record.blood_pressure}
+                    <strong style="margin-left: 20px;">BMI:</strong> ${record.bmi}
+                  </div>
+                </div>
+                <div class="measurement-meta">
+                  <div class="measurement-status">
+                    <span class="badge ${statusBadge}">${statusText}</span>
+                  </div>
+                  <div class="measurement-date">${formattedDate}</div>
+                </div>
+              </div>
+            `;
+          });
+
+          content.innerHTML = html;
+        } else {
+          content.innerHTML = '<div class="empty-state"><p>No measurement records found</p></div>';
+        }
+      } catch (error) {
+        console.error('Error loading measurement history:', error);
+        content.innerHTML = '<div class="empty-state"><p>Error loading measurement history</p></div>';
+      }
+    }
+
+    async function loadRecentRecords() {
+      const content = document.getElementById('recentRecordsContent');
+      
+      try {
+        const response = await fetch(`/admin/api/records?limit=10&offset=0`);
+        
+        if (!response.ok) {
+          content.innerHTML = '<div class="empty-state"><p>No patient records available.</p></div>';
+          return;
+        }
+        
+        const data = await response.json();
+
+        if (data.success && data.records.length > 0) {
+          let html = `
+            <table>
+              <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+
+          data.records.forEach((record) => {
+            const date = new Date(record.created_at);
+            const formattedDate = date.toLocaleDateString() + ', ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            html += `
+              <tr>
+                <td>${record.patient_name}</td>
+                <td>${record.age}</td>
+                <td>${record.sex}</td>
+                <td><span class="badge normal">Normal</span></td>
+                <td>${formattedDate}</td>
+              </tr>
+            `;
+          });
+
+          html += '</tbody></table>';
+          content.innerHTML = html;
+        } else {
+          content.innerHTML = '<div class="empty-state"><p>No records found</p></div>';
+        }
+      } catch (error) {
+        console.error('Error loading recent records:', error);
+        content.innerHTML = '<div class="empty-state"><p>Error loading records</p></div>';
+      }
+    }
+
+    async function logout(event) {
+      event.preventDefault();
+      try {
+        const response = await fetch('/admin/logout', { method: 'POST' });
+        const data = await response.json();
+        if (data.success) {
+          window.location.href = '/';
+        }
+      } catch (error) {
+        console.error('Logout error:', error);
+      }
+    }
+
+    // Load data on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('patientSearch');
+      const genderFilter = document.getElementById('genderFilter');
+      const ageFilter = document.getElementById('ageFilter');
+      
+      if (searchInput) {
+        searchInput.addEventListener('keyup', (e) => {
+          if (e.key === 'Enter') {
+            performSearch();
+          }
+        });
+      }
+      
+      if (genderFilter) {
+        genderFilter.addEventListener('change', performSearch);
+      }
+      
+      if (ageFilter) {
+        ageFilter.addEventListener('change', performSearch);
+      }
+      
+      loadStats();
+      loadRecentRecords();
+    });
+  </script>
+</body>
+</html>
