@@ -1,0 +1,368 @@
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-06 20:16:51
+Record ID     : 8
+User ID       : 8
+QR Code       : HC-8-833dc0c0
+
+Full Name     : bogart
+Age           : 99
+Sex           : Male
+Contact / ID  : 09124212424
+Branch        : bsu lipa
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-06 23:26:23
+Record ID     : 9
+User ID       : 9
+QR Code       : HC-9-e74e18c8
+
+Full Name     : frances laprades
+Age           : 20
+Sex           : Male
+Contact / ID  : 23-34700
+Branch        : bsu
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-07 00:48:18
+Record ID     : 10
+User ID       : 10
+QR Code       : HC-10-e1f9f62f
+
+Full Name     : John Doe
+Age           : 25
+Sex           : Male
+Contact No.   : 09123456789
+Student ID    : STU12345
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-07 00:49:38
+Record ID     : 11
+User ID       : 11
+QR Code       : HC-11-53fff58d
+
+Full Name     : John Doe
+Age           : 25
+Sex           : Male
+Contact No.   : 09917268521
+Student ID    : 23-34700
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-07 00:58:58
+Record ID     : 12
+User ID       : 12
+QR Code       : HC-12-b744ffd1
+
+Full Name     : mark bunsay
+Age           : 19
+Sex           : Male
+Contact No.   : 09123456789
+Student ID    : 23-34158
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-07 01:01:07
+Record ID     : 13
+User ID       : 13
+QR Code       : HC-13-26397cee
+
+Full Name     : Test Patient
+Age           : 30
+Sex           : Male
+Contact No.   : 09123456789
+Student ID    : TEST001
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-07 01:01:43
+Record ID     : 14
+User ID       : 14
+QR Code       : HC-14-8f746a70
+
+Full Name     : Test Patient
+Age           : 30
+Sex           : Male
+Contact No.   : 09123456789
+Student ID    : TEST001
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 19:03:05
+Record ID     : 10
+User ID       : 10
+QR Code       : HC-10-125bced7
+
+Full Name     : laurenze villanueva
+Age           : 21
+Sex           : Male
+Contact No.   : 09949677824
+Student ID    : 23-39230
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 19:17:31
+Record ID     : 11
+User ID       : 11
+QR Code       : HC-11-6211fd63
+
+Full Name     : laurenze villanueva
+Age           : 21
+Sex           : Male
+Contact No.   : 09949677824
+Student ID    : 23-39230
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 19:22:52
+Record ID     : 12
+User ID       : 12
+QR Code       : HC-12-b4212866
+
+Full Name     : laurenze villanueva
+Age           : 21
+Sex           : Male
+Contact No.   : 09949677824
+Student ID    : 23-39230
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 19:27:34
+Record ID     : 13
+User ID       : 13
+QR Code       : HC-13-f02bed78
+
+Full Name     : laurenze villanueva
+Age           : 21
+Sex           : Male
+Contact No.   : 09949677824
+Student ID    : 
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 19:33:47
+Record ID     : 14
+User ID       : 14
+QR Code       : HC-14-9529dda8
+
+Full Name     : laurenze villanueva
+Age           : 100
+Sex           : Male
+Contact No.   : 09949677824
+Student ID    : 23-39230
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 20:22:08
+Record ID     : 1
+User ID       : 1
+QR Code       : HC-1-1aeecffd
+
+Full Name     : laurenze villanueva
+Age           : 21
+Sex           : Male
+Contact No.   : 09949677824
+Student ID    : 23-39230
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 20:23:05
+Record ID     : 2
+User ID       : 2
+QR Code       : HC-2-5cc0cf7f
+
+Full Name     : laurenze villanueva
+Age           : 21
+Sex           : Male
+Contact No.   : 09949677824
+Student ID    : 23-39230
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 20:26:11
+Record ID     : 3
+User ID       : 3
+QR Code       : HC-3-47832a98
+
+Full Name     : laurenze villanueva
+Age           : 21
+Sex           : Male
+Contact No.   : 09949677824
+Student ID    : 23-39230
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 20:28:08
+Record ID     : 4
+User ID       : 4
+QR Code       : HC-4-c182fc2d
+
+Full Name     : laurenze villanueva
+Age           : 21
+Sex           : Male
+Contact No.   : 09949677824
+Student ID    : 23-39230
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 20:30:43
+Record ID     : 5
+User ID       : 5
+QR Code       : HC-5-339d5dc7
+
+Full Name     : laurenze villanueva
+Age           : 21
+Sex           : Male
+Contact No.   : 09949677824
+Student ID    : 23-39230
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 20:31:34
+Record ID     : 6
+User ID       : 6
+QR Code       : HC-6-99f00811
+
+Full Name     : laurenze villanueva
+Age           : 21
+Sex           : Male
+Contact No.   : 09949677824
+Student ID    : 23-39230
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 20:32:58
+Record ID     : 7
+User ID       : 7
+QR Code       : HC-7-3b10d6fa
+
+Full Name     : laurenze villanueva
+Age           : 21
+Sex           : Male
+Contact No.   : 09949677824
+Student ID    : 23-39230
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 20:33:37
+Record ID     : 8
+User ID       : 8
+QR Code       : HC-8-fb6bd8bd
+
+Full Name     : laurenze villanueva
+Age           : 21
+Sex           : Male
+Contact No.   : 09949677824
+Student ID    : 23-39230
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 20:34:58
+Record ID     : 9
+User ID       : 9
+QR Code       : HC-9-d35a2ab3
+
+Full Name     : laurenze villanueva
+Age           : 21
+Sex           : Male
+Contact No.   : 09949677824
+Student ID    : 23-39230
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 20:36:49
+Record ID     : 10
+User ID       : 10
+QR Code       : HC-10-22569830
+
+Full Name     : laurenze villanueva
+Age           : 21
+Sex           : Male
+Contact No.   : 09949677824
+Student ID    : 23-39230
+========================================
+
+
+========================================
+HealthCheck Kiosk PH - Patient Record
+========================================
+Date and Time : 2026-05-15 20:37:39
+Record ID     : 11
+User ID       : 11
+QR Code       : HC-11-0358ffc0
+
+Full Name     : kenneth barte
+Age           : 100
+Sex           : Male
+Contact No.   : 09912399213
+Student ID    : 23-39234
+========================================
+
