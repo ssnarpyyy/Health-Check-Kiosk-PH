@@ -663,6 +663,8 @@
         loadRecords();
       } else if (pageId === 'measurement-history') {
         loadMeasurementHistory();
+      } else if (pageId === 'print-logs') {
+        loadPrintLogs();
       }
     }
 
@@ -727,6 +729,7 @@
                   <th>Gender</th>
                   <th>Status</th>
                   <th>Date</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -743,6 +746,7 @@
                 <td>${record.sex}</td>
                 <td><span class="badge normal">Normal</span></td>
                 <td>${formattedDate}</td>
+                <td><button onclick="printRecord(${record.record_id}, '${record.patient_name}')" style="padding: 6px 12px; background: #8b5cf6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px;">🖨️ Print</button></td>
               </tr>
             `;
           });
@@ -862,6 +866,7 @@
                   <th>Gender</th>
                   <th>Status</th>
                   <th>Date</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -878,6 +883,7 @@
                 <td>${record.sex}</td>
                 <td><span class="badge normal">Normal</span></td>
                 <td>${formattedDate}</td>
+                <td><button onclick="printRecord(${record.record_id}, '${record.patient_name}')" style="padding: 6px 12px; background: #8b5cf6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px;">🖨️ Print</button></td>
               </tr>
             `;
           });
@@ -903,6 +909,77 @@
         }
       } catch (error) {
         console.error('Logout error:', error);
+      }
+    }
+
+    async function printRecord(recordId, patientName) {
+      try {
+        const response = await fetch(`/admin/api/print-patient-record/${recordId}`, { method: 'POST' });
+        const data = await response.json();
+        if (data.success) {
+          console.log('Print event logged');
+          window.print();
+        } else {
+          alert('Error logging print: ' + data.message);
+        }
+      } catch (error) {
+        console.error('Print error:', error);
+        alert('Error printing record');
+      }
+    }
+
+    async function loadPrintLogs(page = 0) {
+      const content = document.getElementById('printLogsContent');
+      content.innerHTML = '<div class="empty-state"><p>Loading print logs...</p></div>';
+
+      try {
+        const limit = 20;
+        const offset = page * limit;
+        const response = await fetch(`/admin/api/print-logs?limit=${limit}&offset=${offset}`);
+        
+        if (!response.ok) {
+          content.innerHTML = '<div class="empty-state"><p>No print logs available.</p></div>';
+          return;
+        }
+        
+        const data = await response.json();
+
+        if (data.success && data.logs && data.logs.length > 0) {
+          let html = `
+            <table>
+              <thead>
+                <tr>
+                  <th>Log ID</th>
+                  <th>Activity</th>
+                  <th>Event Details</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+
+          data.logs.forEach((log) => {
+            const date = new Date(log.timestamp);
+            const formattedDate = date.toLocaleDateString() + ', ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            html += `
+              <tr>
+                <td>${log.log_id}</td>
+                <td>${log.activity}</td>
+                <td>${log.system_event}</td>
+                <td>${formattedDate}</td>
+              </tr>
+            `;
+          });
+
+          html += '</tbody></table>';
+          content.innerHTML = html;
+        } else {
+          content.innerHTML = '<div class="empty-state"><p>No print logs found</p></div>';
+        }
+      } catch (error) {
+        console.error('Error loading print logs:', error);
+        content.innerHTML = '<div class="empty-state"><p>Error loading print logs</p></div>';
       }
     }
 

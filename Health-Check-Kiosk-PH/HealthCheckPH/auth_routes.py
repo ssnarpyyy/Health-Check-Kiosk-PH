@@ -52,6 +52,22 @@ def dashboard():
     return render_template("admin_dashboard_simple.html", username=session.get('admin_username'))
 
 
+@auth_routes.route("/records", methods=["GET"])
+def view_records():
+    """View patient records page"""
+    if 'admin_id' not in session:
+        return redirect(url_for("auth_routes.login_page"))
+    return render_template("patient_records.html", username=session.get('admin_username'))
+
+
+@auth_routes.route("/print-logs", methods=["GET"])
+def view_print_logs():
+    """View print logs page"""
+    if 'admin_id' not in session:
+        return redirect(url_for("auth_routes.login_page"))
+    return render_template("print_logs.html", username=session.get('admin_username'))
+
+
 @auth_routes.route("/logout", methods=["POST"])
 def logout():
     """Handle admin logout"""
@@ -157,7 +173,6 @@ def get_records():
                     u.full_name as patient_name,
                     u.age,
                     u.sex,
-                    u.branch,
                     hr.body_temperature,
                     hr.heart_rate,
                     hr.spo2,
@@ -194,6 +209,101 @@ def get_records():
             "total": total,
             "limit": limit,
             "offset": offset
+        }), 200
+
+    except Exception as error:
+        return jsonify({
+            "success": False,
+            "message": str(error)
+        }), 500
+
+
+@auth_routes.route("/api/print-logs", methods=["GET"])
+def get_print_logs():
+    """Get print logs from system_logs table"""
+    if 'admin_id' not in session:
+        return jsonify({"success": False, "message": "Unauthorized"}), 401
+
+    try:
+        limit = request.args.get("limit", 50, type=int)
+        offset = request.args.get("offset", 0, type=int)
+
+        db = get_db()
+        with db.cursor() as cursor:
+            # Get all system logs (print activities)
+            cursor.execute("""
+                SELECT 
+                    log_id,
+                    user_id,
+                    activity,
+                    system_event,
+                    timestamp
+                FROM system_logs
+                ORDER BY timestamp DESC
+                LIMIT %s OFFSET %s
+            """, (limit, offset))
+            logs = cursor.fetchall()
+
+            # Get total count
+            cursor.execute("SELECT COUNT(*) as total FROM system_logs")
+            total = cursor.fetchone()['total']
+
+            db.close()
+
+        return jsonify({
+            "success": True,
+            "logs": logs,
+            "total": total,
+            "limit": limit,
+            "offset": offset
+        }), 200
+
+    except Exception as error:
+        return jsonify({
+            "success": False,
+            "message": str(error)
+        }), 500
+
+
+@auth_routes.route("/api/print-patient-record/<int:record_id>", methods=["POST"])
+def print_patient_record(record_id):
+    """Log a patient record print event"""
+    if 'admin_id' not in session:
+        return jsonify({"success": False, "message": "Unauthorized"}), 401
+
+    try:
+        db = get_db()
+        with db.cursor() as cursor:
+            # Get the record
+            cursor.execute("""
+                SELECT hr.user_id
+                FROM health_records hr
+                WHERE hr.record_id = %s
+            """, (record_id,))
+            record = cursor.fetchone()
+
+            if not record:
+                return jsonify({
+                    "success": False,
+                    "message": "Record not found"
+                }), 404
+
+            # Log the print event
+            cursor.execute("""
+                INSERT INTO system_logs (user_id, activity, system_event)
+                VALUES (%s, %s, %s)
+            """, (
+                record['user_id'],
+                "Patient record printed",
+                f"Record ID {record_id} printed from admin dashboard"
+            ))
+
+            db.commit()
+            db.close()
+
+        return jsonify({
+            "success": True,
+            "message": "Print event logged successfully"
         }), 200
 
     except Exception as error:
