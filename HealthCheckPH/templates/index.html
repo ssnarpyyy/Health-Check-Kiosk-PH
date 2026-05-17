@@ -45,14 +45,14 @@
 
       <div class="field">
         <label>Full Name *</label>
-        <input type="text" id="fullName" placeholder="Enter your full name">
+        <input type="text" id="fullName" placeholder="Enter your full name" inputmode="text">
         <small class="error" id="fullNameError"></small>
       </div>
 
       <div class="two-col">
         <div class="field">
           <label>Age *</label>
-          <input type="number" id="age" placeholder="Age">
+          <input type="number" id="age" placeholder="Age" min="1" max="100">
           <small class="error" id="ageError"></small>
         </div>
 
@@ -69,14 +69,14 @@
 
       <div class="two-col">
         <div class="field">
-          <label>Contact No.</label>
-          <input type="text" id="contact" placeholder="Enter contact number">
+          <label>Contact No. *</label>
+          <input type="text" id="contact" placeholder="09XXXXXXXXX" maxlength="11" inputmode="numeric">
           <small class="error" id="contactError"></small>
         </div>
 
         <div class="field">
-          <label>Student ID</label>
-          <input type="text" id="studentId" placeholder="Enter student ID">
+          <label>Student ID *</label>
+          <input type="text" id="studentId" placeholder="XX-XXXXX" maxlength="8">
           <small class="error" id="studentIdError"></small>
         </div>
       </div>
@@ -247,8 +247,8 @@
       </div>
 
       <div class="button-row">
-        <button class="back-btn" onclick="restartSystem()">Finish</button>
-        <button class="main-btn wide" onclick="printAndGoHome()">Print Result</button>
+        <button class="back-btn" onclick="finishCheckup()">Finish</button>
+        <button class="main-btn wide" onclick="printAndSave()">Print Result</button>
       </div>
     </div>
   </section>

@@ -517,18 +517,11 @@
         </div>
         
         <div class="filter-controls">
-          <select id="genderFilter" class="filter-select">
-            <option value="">All Genders</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
-          
-          <select id="ageFilter" class="filter-select">
-            <option value="">All Ages</option>
-            <option value="0-18">0-18</option>
-            <option value="19-30">19-30</option>
-            <option value="31-50">31-50</option>
-            <option value="51-100">51+</option>
+          <select id="statusFilter" class="filter-select">
+            <option value="">All Status</option>
+            <option value="Normal">Normal</option>
+            <option value="Monitor">Monitor</option>
+            <option value="Needs Attention">Needs Attention</option>
           </select>
           
           <button onclick="clearFilters()" class="clear-btn">Clear Filters</button>
@@ -663,6 +656,8 @@
         loadRecords();
       } else if (pageId === 'measurement-history') {
         loadMeasurementHistory();
+      } else if (pageId === 'print-logs') {
+        loadPrintLogs();
       }
     }
 
@@ -689,7 +684,7 @@
       }
     }
 
-    async function loadRecords(page = 0, searchQuery = '', genderFilter = '', ageFilter = '') {
+    async function loadRecords(page = 0, searchQuery = '', statusFilter = '') {
       const recordsContent = document.getElementById('recordsContent');
       recordsContent.innerHTML = '<div class="empty-state"><p>Loading records...</p></div>';
 
@@ -701,11 +696,8 @@
         if (searchQuery) {
           url += `&search=${encodeURIComponent(searchQuery)}`;
         }
-        if (genderFilter) {
-          url += `&gender=${encodeURIComponent(genderFilter)}`;
-        }
-        if (ageFilter) {
-          url += `&age=${encodeURIComponent(ageFilter)}`;
+        if (statusFilter) {
+          url += `&status=${encodeURIComponent(statusFilter)}`;
         }
         
         const response = await fetch(url);
@@ -727,6 +719,7 @@
                   <th>Gender</th>
                   <th>Status</th>
                   <th>Date</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -743,6 +736,7 @@
                 <td>${record.sex}</td>
                 <td><span class="badge normal">Normal</span></td>
                 <td>${formattedDate}</td>
+                <td><button onclick="printRecord(${record.record_id}, '${record.patient_name}')" style="padding: 6px 12px; background: #8b5cf6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px;">🖨️ Print</button></td>
               </tr>
             `;
           });
@@ -760,15 +754,13 @@
 
     function performSearch() {
       const searchQuery = document.getElementById('patientSearch').value;
-      const genderFilter = document.getElementById('genderFilter').value;
-      const ageFilter = document.getElementById('ageFilter').value;
-      loadRecords(0, searchQuery, genderFilter, ageFilter);
+      const statusFilter = document.getElementById('statusFilter').value;
+      loadRecords(0, searchQuery, statusFilter);
     }
 
     function clearFilters() {
       document.getElementById('patientSearch').value = '';
-      document.getElementById('genderFilter').value = '';
-      document.getElementById('ageFilter').value = '';
+      document.getElementById('statusFilter').value = '';
       loadRecords(0);
     }
 
@@ -862,6 +854,7 @@
                   <th>Gender</th>
                   <th>Status</th>
                   <th>Date</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -878,6 +871,7 @@
                 <td>${record.sex}</td>
                 <td><span class="badge normal">Normal</span></td>
                 <td>${formattedDate}</td>
+                <td><button onclick="printRecord(${record.record_id}, '${record.patient_name}')" style="padding: 6px 12px; background: #8b5cf6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px;">🖨️ Print</button></td>
               </tr>
             `;
           });
@@ -906,11 +900,81 @@
       }
     }
 
+    async function printRecord(recordId, patientName) {
+      try {
+        const response = await fetch(`/admin/api/print-patient-record/${recordId}`, { method: 'POST' });
+        const data = await response.json();
+        if (data.success) {
+          console.log('Print event logged');
+          window.print();
+        } else {
+          alert('Error logging print: ' + data.message);
+        }
+      } catch (error) {
+        console.error('Print error:', error);
+        alert('Error printing record');
+      }
+    }
+
+    async function loadPrintLogs(page = 0) {
+      const content = document.getElementById('printLogsContent');
+      content.innerHTML = '<div class="empty-state"><p>Loading print logs...</p></div>';
+
+      try {
+        const limit = 20;
+        const offset = page * limit;
+        const response = await fetch(`/admin/api/print-logs?limit=${limit}&offset=${offset}`);
+        
+        if (!response.ok) {
+          content.innerHTML = '<div class="empty-state"><p>No print logs available.</p></div>';
+          return;
+        }
+        
+        const data = await response.json();
+
+        if (data.success && data.logs && data.logs.length > 0) {
+          let html = `
+            <table>
+              <thead>
+                <tr>
+                  <th>Log ID</th>
+                  <th>Activity</th>
+                  <th>Event Details</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+
+          data.logs.forEach((log) => {
+            const date = new Date(log.timestamp);
+            const formattedDate = date.toLocaleDateString() + ', ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            html += `
+              <tr>
+                <td>${log.log_id}</td>
+                <td>${log.activity}</td>
+                <td>${log.system_event}</td>
+                <td>${formattedDate}</td>
+              </tr>
+            `;
+          });
+
+          html += '</tbody></table>';
+          content.innerHTML = html;
+        } else {
+          content.innerHTML = '<div class="empty-state"><p>No print logs found</p></div>';
+        }
+      } catch (error) {
+        console.error('Error loading print logs:', error);
+        content.innerHTML = '<div class="empty-state"><p>Error loading print logs</p></div>';
+      }
+    }
+
     // Load data on page load
     document.addEventListener('DOMContentLoaded', () => {
       const searchInput = document.getElementById('patientSearch');
-      const genderFilter = document.getElementById('genderFilter');
-      const ageFilter = document.getElementById('ageFilter');
+      const statusFilter = document.getElementById('statusFilter');
       
       if (searchInput) {
         searchInput.addEventListener('keyup', (e) => {
@@ -920,12 +984,8 @@
         });
       }
       
-      if (genderFilter) {
-        genderFilter.addEventListener('change', performSearch);
-      }
-      
-      if (ageFilter) {
-        ageFilter.addEventListener('change', performSearch);
+      if (statusFilter) {
+        statusFilter.addEventListener('change', performSearch);
       }
       
       loadStats();

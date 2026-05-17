@@ -2,6 +2,42 @@ let checkupId = null;
 let completedSteps = 0;
 let patientInfo = {};
 
+// Initialize input restrictions
+document.addEventListener('DOMContentLoaded', function() {
+  // Full Name - only letters and spaces
+  document.getElementById('fullName')?.addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^A-Za-zÑñ\s.'-]/g, '');
+  });
+
+  // Age - max 100
+  document.getElementById('age')?.addEventListener('input', function(e) {
+    if (this.value > 100) {
+      this.value = 100;
+    }
+    if (this.value < 0) {
+      this.value = '';
+    }
+  });
+
+  // Contact - only digits, exactly 11
+  document.getElementById('contact')?.addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);
+  });
+
+  // Student ID - format XX-XXXXX
+  document.getElementById('studentId')?.addEventListener('input', function(e) {
+    let value = this.value.replace(/[^0-9]/g, '');
+    if (value.length > 7) {
+      value = value.slice(0, 7);
+    }
+    if (value.length >= 2) {
+      this.value = value.slice(0, 2) + '-' + value.slice(2);
+    } else {
+      this.value = value;
+    }
+  });
+});
+
 function showScreen(screenId) {
   document.querySelectorAll(".screen").forEach(screen => {
     screen.classList.remove("active");
@@ -229,6 +265,11 @@ function showResults() {
   fetch("/api/results/" + checkupId)
     .then(response => response.json())
     .then(data => {
+      if (!data.success) {
+        alert("Error: " + (data.message || "Unable to load results."));
+        return;
+      }
+
       const patient = data.patient;
       const vitals = data.vitals;
 
@@ -264,11 +305,20 @@ function showResults() {
       const remarksList = document.getElementById("remarksList");
       remarksList.innerHTML = "";
 
-      data.remarks.forEach(remark => {
-        const li = document.createElement("li");
-        li.textContent = remark;
-        remarksList.appendChild(li);
-      });
+      // Handle remarks as string or array
+      if (data.remarks) {
+        if (typeof data.remarks === "string") {
+          const li = document.createElement("li");
+          li.textContent = data.remarks;
+          remarksList.appendChild(li);
+        } else if (Array.isArray(data.remarks)) {
+          data.remarks.forEach(remark => {
+            const li = document.createElement("li");
+            li.textContent = remark;
+            remarksList.appendChild(li);
+          });
+        }
+      }
 
       showScreen("resultsScreen");
     })
@@ -293,10 +343,11 @@ function restartSystem() {
   showScreen("landingScreen");
 }
 
-function printAndGoHome() {
+function printAndSave() {
   window.print();
-  // Redirect to home after a short delay to allow print dialog to open
-  setTimeout(() => {
-    window.location.href = "/";
-  }, 1000);
+  // Stay on results screen after printing - no redirect
+}
+
+function finishCheckup() {
+  restartSystem();
 }

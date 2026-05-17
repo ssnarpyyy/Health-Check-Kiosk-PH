@@ -41,27 +41,25 @@ def validate_patient(data):
     try:
         age_value = int(age)
 
-        if age_value < 1 or age_value > 120:
-            errors["age"] = "Age must be between 1 and 120."
+        if age_value < 1 or age_value > 100:
+            errors["age"] = "Age must be between 1 and 100."
     except ValueError:
         errors["age"] = "Age must be a valid number."
 
     if sex not in ["Male", "Female"]:
         errors["sex"] = "Please select sex."
 
-    if contact:
-        if len(contact) < 5 or len(contact) > 30:
-            errors["contact"] = "Contact number must be 5 to 30 characters."
-        elif not re.match(r"^[A-Za-z0-9 -]+$", contact):
-            errors["contact"] = "Contact number contains invalid characters."
+    if not contact:
+        errors["contact"] = "Contact number is required."
+    elif len(contact) != 11:
+        errors["contact"] = "Contact number must be exactly 11 digits."
+    elif not re.match(r"^09\d{9}$", contact):
+        errors["contact"] = "Contact number must start with 09 and contain only digits."
 
-    if student_id:
-        if len(student_id) < 2:
-            errors["student_id"] = "Student ID is too short."
-        elif len(student_id) > 50:
-            errors["student_id"] = "Student ID is too long."
-        elif not re.match(r"^[A-Za-z0-9 -]+$", student_id):
-            errors["student_id"] = "Student ID contains invalid characters."
+    if not student_id:
+        errors["student_id"] = "Student ID is required."
+    elif not re.match(r"^\d{2}-\d{5}$", student_id):
+        errors["student_id"] = "Student ID must be in format XX-XXXXX (e.g., 23-39230)."
 
     return errors
 
@@ -70,8 +68,12 @@ def validate_measurement_order(record, measure_type):
     if measure_type not in MEASUREMENT_REQUIREMENTS:
         return False, "Invalid measurement type."
 
+    # Check if measurements are in nested dict (file-based) or top-level (database)
+    measurements = record.get("measurements", record)
+
     for field in MEASUREMENT_REQUIREMENTS[measure_type]:
-        if record.get(field) is None or record.get(field) == "":
+        value = measurements.get(field)
+        if value is None or value == "":
             return False, f"Please complete {MEASUREMENT_DISPLAY[field]} first."
 
     completed_field = {
@@ -83,7 +85,7 @@ def validate_measurement_order(record, measure_type):
         "bmi": "bmi"
     }.get(measure_type)
 
-    if completed_field and record.get(completed_field) is not None:
+    if completed_field and measurements.get(completed_field) is not None:
         return False, f"{MEASUREMENT_DISPLAY[completed_field]} is already completed."
 
     return True, "Measurement allowed."

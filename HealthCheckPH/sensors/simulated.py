@@ -93,11 +93,17 @@ class SimulatedSensorService:
         }
 
     def calculate_bmi(self, record):
-        if not record or record.get("height") is None or record.get("weight") is None:
+        # Check if measurements are in nested dict (file-based) or top-level (database)
+        measurements = record.get("measurements", record) if record else {}
+        
+        height = measurements.get("height")
+        weight = measurements.get("weight")
+        
+        if not record or height is None or weight is None:
             raise ValueError("Height and weight are required before calculating BMI.")
 
-        height_m = float(record["height"]) / 100
-        weight = float(record["weight"])
+        height_m = float(height) / 100
+        weight = float(weight)
 
         bmi = round(weight / (height_m ** 2), 1)
 
